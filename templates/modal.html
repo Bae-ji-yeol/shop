@@ -1,0 +1,164 @@
+
+{% load static %}
+<div class="modal fade" id="nologincart"
+    data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLiveLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>장바구니는 로그인 후 이용 가능합니다</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="{% url 'users:login' %}" type="button" class="btn btn-primary"  >login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="nopointcart"
+    data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLiveLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>포인트 잔액이 부족합니다</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="" type="button" class="btn btn-primary"> charge point</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--결재창-->
+<div class="modal fade" id="checkoutcart"
+    data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
+    <form action="" method="post">
+    {% csrf_token %}
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLiveLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                <tbody>
+                    {% for cart_item in checkout %}
+                    <tr>
+                        <td>
+                            <a href="{{ cart_item.game.get_absolute_url }}">
+                                <img src="{{ cart_item.game.main_image.url }}" alt=" " class="rounded" style="width: 60px">
+                            </a>
+                        </td>
+                        <td class="">
+                            {{ cart_item.game.title }}
+                            <br>
+                            Price: ${{ cart_item.game.price }}
+                            <br>
+                            Qty: {{ cart_item.quantity }} x ${{ cart_item.game.price }}
+                        </td>
+                        <td>
+                        <br>
+                            ${{ cart_item.sub_total }}
+                        </td>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                        point: ${{ user.point }}
+                            <td>
+                        total : ${{ ctotal }}
+                            <td>
+                        <strong><span id="rest_point_check"></span></strong>
+                    </tr>
+                </tbody>
+                </table>
+                <p>결재 하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-success">check out</button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+<div class="modal fade" id="buynow"
+    data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLiveLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLiveLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <a href="{{ game.get_absolute_url }}">
+                                <img src="{{ game.main_image.url }}" alt=""  class="rounded" style="width: 60px">
+                            </a>
+                        </td>
+                        <td class="">
+                            {{ game.title }}
+                            <br>
+                            Price: ${{ game.price }}
+                        </td>
+                    <tr>
+                        <td>
+                            point: ${{ user.point }}
+                        <td>
+                            price : ${{ game.price }}
+                        <td>
+                            <strong><span id="rest_point_buy_now"></span></strong>
+                    </tr>
+                </tbody>
+                </table>
+                <p>결재 하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="" type="button" class="btn btn-success">check out</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var point = ({{ user.point }})
+    var total = ({{ total }})
+    var rest_point = point - total
+    document.getElementById('rest_point').innerHTML="Rest Point: $"+rest_point;
+
+</script>
+
+<script>
+    var point = ({{ user.point }})
+    var total = ({{ ctotal }})
+    var rest_point = point - total
+    document.getElementById('rest_point_check').innerHTML="Rest Point: $"+rest_point;
+
+</script>
+
+<script>
+    var point = ({{ user.point }})
+    var price = ({{ game.price }})
+    var rest_point_buy_now = point - price
+    document.getElementById('rest_point_buy_now').innerHTML="Rest Point: $"+rest_point_buy_now;
+</script>

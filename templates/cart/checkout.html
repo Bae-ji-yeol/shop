@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+                <table class="table">
+                <tbody>
+                    {% for checkout in cart_items %}
+                    <tr>
+                        <td>
+                            <a href="{{ cart_item.game.get_absolute_url }}">
+                                <img src="{{ cart_item.game.main_image.url }}" alt=" " class="rounded" style="width: 60px">
+                            </a>
+                        </td>
+                        <td class="">
+                            {{ cart_item.game.title }}
+                            <br>
+                            Price: ${{ cart_item.game.price }}
+                            <br>
+                            Qty: {{ cart_item.quantity }} x ${{ cart_item.game.price }}
+                        </td>
+                        <td>
+                        <br>
+                            ${{ cart_item.sub_total }}
+                        </td>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                        point: ${{ user.point }}
+                            <td>
+                        total : ${{ total }}
+                            <td>
+                        <strong><span id="rest_point"></span></strong>
+                    </tr>
+                </tbody>
+
+{% endblock %}

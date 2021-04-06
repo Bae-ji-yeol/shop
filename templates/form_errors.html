@@ -1,0 +1,13 @@
+
+{% for field in form %} <!-- 필드 오류 출력 -->
+    {% for error in field.errors %}
+        <div class="invalid-feedback">
+          <strong>{{ field.label }}</strong>은 {{ error }}
+        </div>
+    {% endfor %}
+{% endfor %}
+{% for error in form.non_field_errors %} <!-- 넌필드 오류 출력 -->
+    <div class="invalid-feedback">
+        <strong>{{ error }}</strong>
+    </div>
+{% endfor %}

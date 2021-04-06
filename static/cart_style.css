@@ -1,0 +1,34 @@
+.my_custom_table{
+    min-width: 400px;
+    font-size: 14px;
+    border-bottom-color: inherit;
+}
+
+.my_custom_thread{
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    background-color: aliceblue !important;
+
+}
+
+.custom_image{
+    width: 100px;
+    height: 100px;
+}
+
+.custom_a{
+    text-decoration: none;
+    font-size: 20px;
+
+}
+
+.custom_icon{
+    text-decoration: none;
+    color: black;
+
+}
+
+.my_custom_button{
+    margin-top: 5px;
+}

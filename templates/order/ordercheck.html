@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <div class="row mx-auto">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table my_custom_table" >
+                <thead  class="my_custom_thread">
+                    <tr>
+                        <th colspan="5" style="border-bottom-color: inherit; border-bottom-width:initial;">
+                            Your items
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cart_item in cart_items %}
+                    <tr>
+
+                        <td>
+                            <a href="{{ cart_item.game.get_absolute_url }}">
+                                <a href="{% url 'product:detail' cart_item.game.id %}">
+                                    <img src="{{ cart_item.game.main_image.url }}" alt="" class=" rounded custom_image">
+                                </a>
+                            </a>
+                        </td>
+                        <td class="text-left">
+                            {{ cart_item.game.title }}
+
+                            Price: ${{ cart_item.game.price }}
+                            <br>
+                            Qty: {{ cart_item.quantity }} x ${{ cart_item.game.price }}
+                        </td>
+                        <td>
+                            ${{ cart_item.sub_total }}
+                        </td>
+                    </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <table class="table my_custom_table">
+                <thead class="my_custom_thread">
+                    <tr>
+                        <th style="border-bottom-color: inherit; border-bottom-width:initial;">
+                            Checkout
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            payment
+                            <br>
+                            point: ${{ user.point }}
+                        </td>
+                    </tr>
+                <tr>
+                    <td class="text-left">
+                        total : <strong>${{ total }}</strong>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{% endblock %}

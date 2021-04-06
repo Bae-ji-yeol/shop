@@ -1,0 +1,70 @@
+{% load static %}
+<!-- 네비게이션바 -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <div class="container-fluid ">
+        <a class="navbar-brand" href="{% url 'product:list' %}">
+            <img src="{% static 'images/logo.svg' %}" width="38" height="30" class="d-inline-block align-top" alt="logo" loading="lazy"
+                 style="filter: invert(1) grayscale(100%) brightness(200%);">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link active" aria-current="page" href="{% url 'users:logout' %}">
+                        {{ user.username }} (로그아웃)
+                    </a>
+                    {% else %}
+                    <a class="nav-link active" aria-current="page" href="{% url 'users:login' %}">
+                        로그인
+                    </a>
+                    {% endif %}
+                </li>
+
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                        <i class="fas fa-shopping-cart"></i> ({{ item_count }})
+                    </a>
+                    {% else %}
+                    <i class="nav-link fas fa-shopping-cart " type="button" data-bs-toggle="modal" data-bs-target="#nologincart" style="margin-top: 5px" ></i>
+
+                    {% endif %}
+                </li>
+                <li class="nav-item dropdown">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ user.username }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="home.html">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item"  href="{% url 'users:logout' %}">
+                            {{ user.username }} (로그아웃)
+                        </a></li>
+                        <li><a class="dropdown-item" href="#">포인트: ${{ user.point }}</a></li>
+                    </ul>
+                    {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        로그인
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>{% include "users/loginsmall.html" %}</li>
+                    </ul>
+                    {% endif %}
+                </li>
+
+            </ul>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-dark" type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+</nav>

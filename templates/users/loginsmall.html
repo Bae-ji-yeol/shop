@@ -1,0 +1,33 @@
+
+{% block content %}
+
+<div class="container my-3">
+    <div class="row">
+        <div class="">
+            <h4>로그인</h4>
+        </div>
+    </div>
+
+    <form method="post" class="post-form" action="{% url 'users:login' %}">
+        {% csrf_token %}
+         <!-- ID, password 입력오류시 -->
+        <div class="form-group">
+            <label for="email">EMAIL</label>
+            <input type="text" class="form-control {% if form.errors %} is-invalid {% endif %}" name="username" id="username"
+                value="{{ form.email.value|default_if_none:'' }}">
+        </div>
+        <div class="form-group">
+            <label for="password">PASSWORD</label>
+            <input type="password" class="form-control{% if form.errors %} is-invalid {% endif %}" name="password" id="password"
+                value="{{ form.password.value|default_if_none:'' }}">
+            {% include "form_errors.html" %}
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">로그인</button>
+        <button type="button" class="btn btn-primary" >
+            <a style="color: darkgray" href="{% url 'users:signup' %}">회원가입</a>
+        </button>
+    </form>
+</div>
+
+{% endblock %}

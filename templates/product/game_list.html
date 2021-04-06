@@ -1,0 +1,111 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 class="fw-light">Album example</h1>
+            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+            <p>
+                <a href="#" class="btn btn-primary my-2">Main call to action</a>
+                <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+{% if game_list %}
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5  g-3">
+            {% for game in game_list %}
+            <div class="col">
+                <div class="card shadow-sm">
+                    {% if game.main_image %}
+                    <img  src="{{ game.main_image.url }}" width="">
+                    {% else %}
+                        {% include "noimg.html" %}
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ game.title }}</h5>
+                        <p class="card-text">$ {{ game.price }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'product:detail' game.id %}">View</a></button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </div>
+                            <small class="text-muted">
+                                {% if game.comment_set.count >= 0 %}
+                                    {{ game.comment_set.count }} reviews
+                                {% endif %}
+                            </small>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <ul class="pagination justify-content-center">
+        <!-- 이전 페이지 -->
+        {% if game_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ game_list.previous_page_number }}">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" herf="#">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %}
+        <!-- 페이지 리스트 -->
+        {% for page_nmber in game_list.paginator.page_range %}
+            {% if page_nmber >= game_list.number|add:-5 and page_nmber <= game_list.number|add:5 %}
+                {% if page_nmber == game_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_nmber }}">
+                {{ page_nmber }}
+            </a>
+        </li>
+                {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_nmber }}">
+                {{ page_nmber }}
+            </a>
+        </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <!-- 다음 페이지 -->
+        {% if game_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ game_list.next_page_number }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" herf="#">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+
+
+{% else %}
+    <p>등록된 상품이 없습니다</p>
+{% endif %}
+
+
+
+
+{% endblock %}
