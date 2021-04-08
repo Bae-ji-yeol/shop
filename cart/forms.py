@@ -1,7 +1,9 @@
 from django import forms
+from .models import CartItem
 
 
-class CheckForm(forms.Form):
-    check = forms.BooleanField()
+class CheckForm(forms.ModelForm):
 
-
+    class Meta:
+        model = CartItem
+        fields = ['check']

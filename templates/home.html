@@ -2,10 +2,10 @@
 {% load static %}
 {% block content %}
 
-<form method = "post">
+<form method = "post" enctype="multipart/form-data">
 {% csrf_token %}
-    {{ form }}
+    <input type="checkbox" name="geeks_field">
     <input type = "submit" value = "Submit">
 </form>
-<
+
 {% endblock %}
